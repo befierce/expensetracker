@@ -30,29 +30,30 @@ function generateKey() {
 }
 
 function editExpenseItem(key) {
-    const expenseData = JSON.parse(localStorage.getItem(key));
 
-    // Remove the expense item from local storage
-    localStorage.removeItem(key);
+
 
     // Populate the form fields with the expense details for editing
     document.getElementById("expenseAmount").value = expenseData.money;
     document.getElementById("description").value = expenseData.description;
     document.getElementById("category").value = expenseData.category;
 
-    removeExpenseItem(key);
+    // removeExpenseItem(key);
 }
 
 
-function removeExpenseItem(key) {
-    // Remove the expense item from local storage
-    localStorage.removeItem(key);
-
-    // Remove the corresponding list item from the UI
-    const expenseList = document.getElementById("users");
-    const listItem = document.querySelector(`li[data-key="${key}"]`);
-    expenseList.removeChild(listItem);
+function removeExpenseItem(event) {
+    var li = event.target.parentElement;
+    var id = li.getAttribute('data-key');
+    axios.delete(`http://localhost:3000/${id}`)
+        .then(() => {
+            li.remove(); // Remove the corresponding <li> element from the UI
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
+
 
 function displayExpenseItems(expenseData) {
         var li = document.createElement('li');
@@ -63,18 +64,16 @@ function displayExpenseItems(expenseData) {
 
         var editButton = document.createElement('button');
         editButton.className = 'btn btn-sm btn-primary mx-2';
+        editButton.type = "button";
         editButton.textContent = 'Edit';
-        editButton.addEventListener('click', function () {
-            editExpenseItem(key);
-        });
+        editButton.addEventListener('click',editExpenseItem);
         li.appendChild(editButton);
 
         var removeButton = document.createElement('button');
         removeButton.className = 'btn btn-sm btn-danger';
+        removeButton.type = "button";
         removeButton.textContent = 'Remove';
-        removeButton.addEventListener('click', function () {
-            removeExpenseItem(key);
-        });
+        removeButton.addEventListener('click',removeExpenseItem);
         li.appendChild(removeButton);
 
         var expenseList = document.getElementById('users');

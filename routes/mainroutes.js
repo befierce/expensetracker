@@ -4,13 +4,11 @@ const router = express.Router();
 
 router.post('/', requestcontroller.postDataToTheServer);
 
-router.get('/:id', (req, res, next) => {
-
-});
+router.delete('/:id', requestcontroller.deleteDataFromServer);
 
 router.get('/', requestcontroller.getAllDataFromServer);
 
-
+router.get('/:id', requestcontroller.getSingleDataFromServer)
 // router.post('/', (req, res, next) => {
 
 // });
