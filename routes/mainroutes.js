@@ -9,9 +9,6 @@ router.delete('/:id', requestcontroller.deleteDataFromServer);
 router.get('/', requestcontroller.getAllDataFromServer);
 
 router.get('/:id', requestcontroller.getSingleDataFromServer)
-// router.post('/', (req, res, next) => {
-
-// });
 
 
 
