@@ -3,9 +3,11 @@ const http = require('http');
 const cors = require('cors')
 const db = require('./util/database');
 const app = express();
-
+const User = require('./models/user')
 const mainRoutes = require('./routes/mainroutes');
 
+
+User.sync();
 
 app.use(cors());
 app.use(express.json());
